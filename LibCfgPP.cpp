@@ -28,14 +28,30 @@ void print_an_error(const std::string &message) {
         exit(EXIT_FAILURE);
 }
 
+void remove_extra_empty_lines_in_the_file() {
+    LCPP_UINT32 i = 0;
+
+    while (i < file_info.lines.size()) {
+        if (file_info.lines[0].empty()) {
+            file_info.lines.erase(file_info.lines.begin());
+            continue;
+        }
+
+        i++;
+    }
+}
+
+void format_the_file() { remove_extra_empty_lines_in_the_file(); }
+
 void parse_file_lines() {
     std::ifstream is(file_info.path);
 
     std::string line;
 
-    while (std::getline(is, line)) {
+    while (std::getline(is, line))
         file_info.lines.push_back(line);
-    }
+
+    format_the_file();
 
     for (const std::string &str : file_info.lines)
         printf("%s\n", str.c_str());
