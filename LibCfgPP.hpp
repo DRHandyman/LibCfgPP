@@ -3,6 +3,12 @@
 
 #include <string>
 
+typedef int32_t LCPP_INT32;
+typedef int64_t LCPP_INT64;
+
+typedef uint32_t LCPP_UINT32;
+typedef uint64_t LCPP_UINT64;
+
 namespace LibCfgPP {
     class CfgFile {
       public:
