@@ -2,9 +2,9 @@
 #define _LIBCFGPP_HPP
 
 namespace LibCfgPP {
-const char **fileTypes = [ ".cfg", ".conf", ".config" ];
+    const char **fileTypes = [ ".cfg", ".conf", ".config" ];
 
-class CfgFile {}
+    class CfgFile {}
 } // namespace LibCfgPP
 
 #endif // _LIBCFGPP_HPP
