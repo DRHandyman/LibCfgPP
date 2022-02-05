@@ -1,17 +1,19 @@
 #ifndef _LIBCFGPP_HPP
 #define _LIBCFGPP_HPP
 
+#include <string>
+
 namespace LibCfgPP {
-    const char **fileTypes = [ ".cfg", ".conf", ".config" ];
-
     class CfgFile {
-        public:
-            CfgFile();
+      public:
+        CfgFile();
 
-            void open(const char *path);
+        CfgFile(const std::string &path);
 
-            void close();
-    }
+        void open(const std::string &path);
+
+        void close();
+    };
 } // namespace LibCfgPP
 
 #endif // _LIBCFGPP_HPP
