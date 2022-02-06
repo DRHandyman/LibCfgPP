@@ -47,7 +47,14 @@ namespace LibCfgPP {
         return false;
     }
 
-    void remove_extra_empty_lines_in_the_file() {
+    LCPP_BOOL line_is_section(LCPP_STRING str) {
+        str = remove_whitespaces(str);
+
+        return str[0] == '[' && str.back() == ']' ? true : false;
+    }
+
+    // Adds or deletes empty lines in the file.
+    void _void0() {
         LCPP_BOOL found_not_empty_line = false;
 
         LCPP_UINT32 i = 0;
@@ -71,13 +78,24 @@ namespace LibCfgPP {
                     file_info.lines.erase(file_info.lines.end());
                     continue;
                 }
+                if (line_is_section(file_info.lines[i]) &&
+                    file_info.lines[i + 1] == "" &&
+                    i + 1 < file_info.lines.size()) {
+                    file_info.lines.erase(file_info.lines.begin() + (i + 1));
+                    continue;
+                } else if (line_is_section(file_info.lines[i]) && i - 1 >= 0 &&
+                           file_info.lines[i - 1] != "") {
+                    file_info.lines.insert(file_info.lines.begin() + i, "");
+                    i++;
+                    continue;
+                }
             }
 
             i++;
         }
     }
 
-    void format_the_file() { remove_extra_empty_lines_in_the_file(); }
+    void format_the_file() { _void0(); }
 
     void parse_file_lines() {
         std::ifstream is(file_info.path);
