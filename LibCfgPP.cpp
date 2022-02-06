@@ -9,7 +9,7 @@
 using namespace LibCfgPP;
 
 struct file_info {
-    std::string path;
+    LCPP_STRING path;
     std::vector<std::string> lines;
     LCPP_BOOL is_open = false;
 } file_info;
@@ -18,19 +18,19 @@ enum { TERMINATE_THE_PROGRAM = 1 };
 
 const std::set<std::string> file_types = {".cfg", ".conf", ".config"};
 
-bool file_exists(const std::string &path) {
+bool file_exists(const LCPP_STRING &path) {
     struct stat buffer;
     return (stat(path.c_str(), &buffer) == 0);
 }
 
-void print_an_error(const std::string &message) {
+void print_an_error(const LCPP_STRING &message) {
     printf("[ERROR][LibCfg++]: %s\n", message.c_str());
 
     if (TERMINATE_THE_PROGRAM)
         exit(EXIT_FAILURE);
 }
 
-std::string remove_whitespaces(std::string str) {
+LCPP_STRING remove_whitespaces(LCPP_STRING str) {
     str.erase(remove_if(str.begin(), str.end(), isspace), str.end());
 
     return str;
@@ -87,7 +87,7 @@ void parse_file_lines() {
 
 CfgFile::CfgFile() {}
 
-CfgFile::CfgFile(const std::string &path) { open(path); }
+CfgFile::CfgFile(const LCPP_STRING &path) { open(path); }
 
 void CfgFile::open(const std::string &path) {
     if (!file_exists(path))
