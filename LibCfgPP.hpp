@@ -11,14 +11,16 @@ typedef uint64_t LCPP_UINT64;
 
 typedef bool LCPP_BOOL;
 
+typedef std::string LCPP_STRING;
+
 namespace LibCfgPP {
     class CfgFile {
       public:
         CfgFile();
 
-        CfgFile(const std::string &path);
+        CfgFile(const LCPP_STRING &path);
 
-        void open(const std::string &path);
+        void open(const LCPP_STRING &path);
 
         void close();
 
