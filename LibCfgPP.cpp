@@ -11,6 +11,7 @@ using namespace LibCfgPP;
 struct file_info {
     std::string path;
     std::vector<std::string> lines;
+    LCPP_BOOL is_open = false;
 } file_info;
 
 enum { TERMINATE_THE_PROGRAM = 1 };
@@ -36,7 +37,7 @@ std::string remove_whitespaces(std::string str) {
 }
 
 void remove_extra_empty_lines_in_the_file() {
-    bool found_not_empty_line = false;
+    LCPP_BOOL found_not_empty_line = false;
 
     LCPP_UINT32 i = 0;
 
@@ -81,9 +82,6 @@ void parse_file_lines() {
 
     format_the_file();
 
-    for (const std::string &str : file_info.lines)
-        printf("%s\n", str.c_str());
-
     is.close();
 }
 
@@ -106,8 +104,29 @@ void CfgFile::open(const std::string &path) {
                        "of the following: \".cfg\", \".conf\" or \".config\".");
 
     file_info.path = path;
+    file_info.is_open = true;
 
     parse_file_lines();
+
+    update_file();
 }
 
-void CfgFile::close() { file_info.path.empty(); }
+void CfgFile::close() {
+    file_info.path.clear();
+    file_info.is_open = false;
+}
+
+LCPP_BOOL CfgFile::is_open() { return file_info.is_open; }
+
+void CfgFile::update_file() {
+    if (!is_open())
+        print_an_error(
+            "It is not possible to update the file because it is not open.");
+
+    std::ofstream ofs(file_info.path);
+
+    for (const std::string &line : file_info.lines)
+        ofs << line << std::endl;
+
+    ofs.close();
+}
