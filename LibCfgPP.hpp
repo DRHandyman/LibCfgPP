@@ -9,6 +9,8 @@ typedef int64_t LCPP_INT64;
 typedef uint32_t LCPP_UINT32;
 typedef uint64_t LCPP_UINT64;
 
+typedef bool LCPP_BOOL;
+
 namespace LibCfgPP {
     class CfgFile {
       public:
@@ -19,6 +21,10 @@ namespace LibCfgPP {
         void open(const std::string &path);
 
         void close();
+
+        LCPP_BOOL is_open();
+
+        void update_file();
     };
 } // namespace LibCfgPP
 
