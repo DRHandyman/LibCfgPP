@@ -35,7 +35,7 @@ namespace LibCfgPP {
         return str;
     }
 
-    LCPP_BOOL is_string(const LCPP_STRING &line) {
+    LCPP_BOOL line_is_string(const LCPP_STRING &line) {
         if (line.find('=') != LCPP_STRING::npos &&
             line.find('"') != LCPP_STRING::npos &&
             count(line.begin(), line.end(), '"') >= 2 &&
