@@ -18,7 +18,7 @@ enum { TERMINATE_THE_PROGRAM = 1 };
 
 const std::set<std::string> file_types = {".cfg", ".conf", ".config"};
 
-bool file_exists(const LCPP_STRING &path) {
+LCPP_BOOL file_exists(const LCPP_STRING &path) {
     struct stat buffer;
     return (stat(path.c_str(), &buffer) == 0);
 }
@@ -71,7 +71,7 @@ void format_the_file() { remove_extra_empty_lines_in_the_file(); }
 void parse_file_lines() {
     std::ifstream is(file_info.path);
 
-    std::string line;
+    LCPP_STRING line;
 
     while (std::getline(is, line)) {
         if (remove_whitespaces(line) == "")
