@@ -12,4 +12,7 @@ int main() {
     cfg_file.open("cfg_file.cfg");
 
     cfg_file.close();
+
+    if (line_is_section("[section]"))
+        cout << "true" << endl;
 }
