@@ -87,7 +87,7 @@ namespace LibCfgPP {
                     i + 1 < file_info.lines.size()) {
                     file_info.lines.erase(file_info.lines.begin() + (i + 1));
                     continue;
-                } else if (line_is_section(file_info.lines[i]) && i - 1 >= 0 &&
+                } else if (line_is_section(file_info.lines[i]) && (int64_t)i - 1 >= 0 &&
                            file_info.lines[i - 1] != "") {
                     file_info.lines.insert(file_info.lines.begin() + i, "");
                     i++;
