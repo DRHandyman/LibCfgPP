@@ -8,36 +8,36 @@
 
 namespace LibCfgPP {
     struct file_info {
-        LCPP_STRING path;
+        std::string path;
         std::vector<std::string> lines;
-        LCPP_BOOL is_open = false;
+        bool is_open = false;
     } file_info;
 
     enum { TERMINATE_THE_PROGRAM = 1 };
 
     const std::set<std::string> file_types = {".cfg", ".conf", ".config"};
 
-    LCPP_BOOL file_exists(const LCPP_STRING &path) {
+    bool file_exists(const std::string &path) {
         struct stat buffer;
         return (stat(path.c_str(), &buffer) == 0);
     }
 
-    void print_an_error(const LCPP_STRING &message) {
+    void print_an_error(const std::string &message) {
         printf("[ERROR][LibCfg++]: %s\n", message.c_str());
 
         if (TERMINATE_THE_PROGRAM)
             exit(EXIT_FAILURE);
     }
 
-    LCPP_STRING remove_whitespaces(LCPP_STRING str) {
+    std::string remove_whitespaces(std::string str) {
         str.erase(remove_if(str.begin(), str.end(), isspace), str.end());
 
         return str;
     }
 
-    LCPP_BOOL line_is_string(const LCPP_STRING &line) {
-        if (line.find('=') != LCPP_STRING::npos &&
-            line.find('"') != LCPP_STRING::npos &&
+    bool line_is_string(const std::string &line) {
+        if (line.find('=') != std::string::npos &&
+            line.find('"') != std::string::npos &&
             count(line.begin(), line.end(), '"') >= 2 &&
             line.find('=') < line.find('"'))
             return true;
@@ -47,7 +47,7 @@ namespace LibCfgPP {
         return false;
     }
 
-    LCPP_BOOL line_is_section(LCPP_STRING str) {
+    bool line_is_section(std::string str) {
         str = remove_whitespaces(str);
 
         return str[0] == '[' && str.back() == ']' ? true : false;
@@ -55,9 +55,9 @@ namespace LibCfgPP {
 
     // Adds or deletes empty lines in the file.
     void _void0() {
-        LCPP_BOOL found_not_empty_line = false;
+        bool found_not_empty_line = false;
 
-        LCPP_UINT32 i = 0;
+        uint32_t i = 0;
 
         while (i < file_info.lines.size()) {
             if (file_info.lines[0].empty()) {
@@ -100,7 +100,7 @@ namespace LibCfgPP {
     void parse_file_lines() {
         std::ifstream is(file_info.path);
 
-        LCPP_STRING line;
+        std::string line;
 
         while (std::getline(is, line)) {
             if (remove_whitespaces(line) == "")
@@ -116,7 +116,7 @@ namespace LibCfgPP {
 
     CfgFile::CfgFile() {}
 
-    CfgFile::CfgFile(const LCPP_STRING &path) { open(path); }
+    CfgFile::CfgFile(const std::string &path) { open(path); }
 
     void CfgFile::open(const std::string &path) {
         if (!file_exists(path))
@@ -146,7 +146,7 @@ namespace LibCfgPP {
         file_info.is_open = false;
     }
 
-    LCPP_BOOL CfgFile::is_open() { return file_info.is_open; }
+    bool CfgFile::is_open() { return file_info.is_open; }
 
     void CfgFile::update_file() {
         if (!is_open())
