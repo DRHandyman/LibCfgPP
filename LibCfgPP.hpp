@@ -3,28 +3,18 @@
 
 #include <string>
 
-typedef int32_t LCPP_INT32;
-typedef int64_t LCPP_INT64;
-
-typedef uint32_t LCPP_UINT32;
-typedef uint64_t LCPP_UINT64;
-
-typedef bool LCPP_BOOL;
-
-typedef std::string LCPP_STRING;
-
 namespace LibCfgPP {
     class CfgFile {
       public:
         CfgFile();
 
-        CfgFile(const LCPP_STRING &path);
+        CfgFile(const std::string &path);
 
-        void open(const LCPP_STRING &path);
+        void open(const std::string &path);
 
         void close();
 
-        LCPP_BOOL is_open();
+        bool is_open();
 
         void update_file();
     };
