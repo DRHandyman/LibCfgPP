@@ -129,8 +129,8 @@ namespace LibCfgPP {
                            "specified path.");
 
         if ((path.find('.') != std::string::npos &&
-             file_types.find(
-                 path.substr(path.find('.'), path.length() - path.find('.'))) ==
+             file_types.find(path.substr(path.find_last_of('.'),
+                                         path.length() - path.find('.'))) ==
                  file_types.end()) ||
             (path.find('.') == std::string::npos))
             print_an_error(
