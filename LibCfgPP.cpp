@@ -35,11 +35,15 @@ namespace LibCfgPP {
         return str;
     }
 
-    bool line_is_string(const std::string &line) {
+    bool line_is_string(std::string line) {
+        line = remove_whitespaces(line);
+
         if (line.find('=') != std::string::npos &&
             line.find('"') != std::string::npos &&
             count(line.begin(), line.end(), '"') >= 2 &&
-            line.find('=') < line.find('"'))
+            line.find('=') < line.find('"') &&
+            line[line.find('"') - 1] == '=' &&
+            line.find_last_of('"') + 1 > line.length() - 1)
             return true;
         else
             return false;
