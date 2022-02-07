@@ -1,0 +1,3 @@
+[core] 
+ 
+Excludesfile = .gitignore_global
