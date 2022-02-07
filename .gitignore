@@ -2,3 +2,5 @@
 main.cpp
 cfg_file.cfg
 a.exe
+build
+CMakeLists.txt
