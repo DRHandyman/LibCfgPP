@@ -16,6 +16,9 @@ namespace LibCfgPP {
 
         bool is_open();
 
+        std::string read(const std::string &string_key),
+            read(const std::string &section_key, const std::string &string_key);
+
         void update_file();
     };
 } // namespace LibCfgPP
