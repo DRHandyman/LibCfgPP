@@ -148,10 +148,33 @@ namespace LibCfgPP {
                           (str.find_last_of('"') - str.find_first_of('"')) - 1);
     }
 
+    std::string get_line_comment(const std::string &line) {
+        if (line.find('#') != std::string::npos) {
+            if (std::count(line.begin(), line.end(), '#') >= 2) {
+                for (uint32_t i = 0; i < line.length(); i++) {
+                    if (line[i] == '#' && i > line.find_last_of('#') ||
+                        line[i] == '#' && i < line.find('"'))
+                        return line.substr(i, line.length() - i);
+                }
+            } else
+                return line.substr(line.find('#'),
+                                   line.length() - line.find('#'));
+        } else
+            return "";
+    }
+
+    std::string get_section_key(const std::string &section) {
+        return section.substr(section.find('[') + 1,
+                              (section.find_last_of(']') - section.find('[')) -
+                                  1);
+    }
+
     std::string format_the_line(const std::string &line) {
         if (line_is_string(line))
             return get_string_key(line) + " = \"" + get_string_value(line) +
                    '"';
+        else if (line_is_section(line))
+            return '[' + get_section_key(line) + "] " + get_line_comment(line);
 
         return line;
     }
@@ -165,13 +188,17 @@ namespace LibCfgPP {
             if (line_is_section(line) && !section_detected)
                 section_detected = true;
 
-            if (section_detected && line_is_section(line))
+            if (section_detected && line_is_section(line)) {
+                line = format_the_line(line);
                 continue;
+            }
 
             if (section_detected)
-                line = "    " + format_the_line(line);
+                line = "    " + format_the_line(line) + ' ' +
+                       (line[0] != '#' ? get_line_comment(line) : "");
             else
-                line = format_the_line(line);
+                line = format_the_line(line) + ' ' +
+                       (line[0] != '#' ? get_line_comment(line) : "");
         }
     }
 
@@ -196,8 +223,10 @@ namespace LibCfgPP {
 
             scan_the_line_for_type(line);
 
-            if (line_is_section(line) && !section_detected)
+            if (line_is_section(line) && !section_detected) {
                 section_detected = true;
+                std::cout << get_section_key(line) << std::endl;
+            }
 
             if (section_detected && !line_is_section(line) &&
                 remove_whitespaces(line) != "")
