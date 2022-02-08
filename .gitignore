@@ -1,4 +1,4 @@
-!/.vscode
+.vscode
 main.cpp
 cfg_file.cfg
 a.exe
