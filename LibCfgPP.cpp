@@ -35,7 +35,12 @@ namespace LibCfgPP {
     }
 
     std::string remove_whitespaces(std::string str) {
-        str.erase(remove_if(str.begin(), str.end(), isspace), str.end());
+        str.erase(remove_if(str.begin(), str.end(),
+                            [](char ch) {
+                                return std::isspace<char>(
+                                    ch, std::locale::classic());
+                            }),
+                  str.end());
 
         return str;
     }
@@ -99,11 +104,12 @@ namespace LibCfgPP {
                 found_not_empty_line = true;
 
             if (found_not_empty_line) {
-                if (file_info.lines[i] == "" && file_info.lines[i - 1] != "" &&
-                    file_info.lines[i + 1] == "") {
+                if (file_info.lines[i] == "" &&
+                    file_info.lines[i + 1].empty()) {
                     file_info.lines.erase(file_info.lines.begin() + (i + 1));
                     continue;
                 }
+                LCPP_LOG(file_info.lines[i]);
                 if (file_info.lines.back().empty()) {
                     file_info.lines.erase(file_info.lines.end());
                     continue;
@@ -115,7 +121,8 @@ namespace LibCfgPP {
                     continue;
                 } else if (line_is_section(file_info.lines[i]) &&
                            (int64_t)i - 1 >= 0 &&
-                           file_info.lines[i - 1] != "") {
+                           !remove_whitespaces(file_info.lines[i - 1])
+                                .empty()) {
                     file_info.lines.insert(file_info.lines.begin() + i, "");
                     i++;
                     continue;
@@ -126,16 +133,71 @@ namespace LibCfgPP {
         }
     }
 
-    void format_the_file() { _void0(); }
+    // Removes trailing and leading spaces in a string
+    std::string remove_tl_whitespaces(const std::string &str) {
+        if (str.find_first_not_of(' ') != std::string::npos)
+            return str.substr(str.find_first_not_of(' '),
+                              str.find_last_not_of(' ') -
+                                  str.find_first_not_of(' ') + 1);
+        else
+            return str;
+    }
+
+    std::string get_string_key(const std::string &str) {
+        return remove_tl_whitespaces(str.substr(0, str.find('=')));
+    }
+
+    std::string get_string_value(const std::string &str) {
+        return str.substr(str.find_first_of('"') + 1,
+                          (str.find_last_of('"') - str.find_first_of('"')) - 1);
+    }
+
+    std::string format_the_line(const std::string &line) {
+        if (line_is_string(line))
+            return get_string_key(line) + " = \"" + get_string_value(line) +
+                   '"';
+
+        return line;
+    }
+
+    void format_the_file() {
+        bool section_detected = false;
+
+        _void0();
+
+        for (std::string &line : file_info.lines) {
+            if (line_is_section(line) && !section_detected)
+                section_detected = true;
+
+            if (section_detected && line_is_section(line))
+                continue;
+
+            if (section_detected)
+                line = "    " + format_the_line(line);
+            else
+                line = format_the_line(line);
+        }
+    }
 
     void parse_file_lines() {
         std::ifstream is(file_info.path);
 
         std::string line;
 
+        bool section_detected = false;
+
         while (std::getline(is, line)) {
-            if (remove_whitespaces(line) == "")
+            if (remove_whitespaces(line).empty())
                 line = remove_whitespaces(line);
+
+            remove_tl_whitespaces(line);
+
+            if (line_is_section(line) && !section_detected)
+                section_detected = true;
+
+            if (section_detected && !line_is_section(line) &&
+                remove_whitespaces(line) != "")
+                line = "    " + line;
 
             file_info.lines.push_back(line);
         }
@@ -191,4 +253,9 @@ namespace LibCfgPP {
 
         ofs.close();
     }
+
+    std::string CfgFile::read(const std::string &string_key) {}
+
+    std::string CfgFile::read(const std::string &section_key,
+                              const std::string &string_key) {}
 } // namespace LibCfgPP
