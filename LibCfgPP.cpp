@@ -41,8 +41,8 @@ namespace LibCfgPP {
     }
 
     std::string line_trim_comment(const std::string &line) {
-        if (std::count(line.begin(), line.end(), '"') >= 2) {
-            if (line.find('#') != std::string::npos) {
+        if (line.find('#') != std::string::npos) {
+            if (std::count(line.begin(), line.end(), '"') >= 2) {
                 std::string output = line;
 
                 for (uint32_t i = 0; i < line.length(); i++) {
@@ -54,7 +54,8 @@ namespace LibCfgPP {
                 }
 
                 return output;
-            }
+            } else
+                return line.substr(0, line.find('#'));
         }
 
         return line;
