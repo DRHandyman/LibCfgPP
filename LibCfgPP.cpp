@@ -18,17 +18,13 @@ namespace LibCfgPP {
 
     const std::set<std::string> file_types = {".cfg", ".conf", ".config"};
 
-    template <typename T> void LCPP_LOG(const T &message) {
-        std::cout << "LCPP_LOG: " << message << std::endl;
-    }
-
     bool file_exists(const std::string &path) {
         struct stat buffer;
         return (stat(path.c_str(), &buffer) == 0);
     }
 
-    void print_an_error(const std::string &message) {
-        printf("[ERROR][LibCfg++]: %s\n", message.c_str());
+    template <typename T> void LCPP_ERROR(const T &message) {
+        std::cout << "[ERROR][LibCfg++]: " << message << std::endl;
 
         if (TERMINATE_THE_PROGRAM)
             exit(EXIT_FAILURE);
@@ -109,7 +105,6 @@ namespace LibCfgPP {
                     file_info.lines.erase(file_info.lines.begin() + (i + 1));
                     continue;
                 }
-                LCPP_LOG(file_info.lines[i]);
                 if (file_info.lines.back().empty()) {
                     file_info.lines.erase(file_info.lines.end());
                     continue;
@@ -179,6 +174,12 @@ namespace LibCfgPP {
         }
     }
 
+    void scan_the_line_for_type(const std::string &line) {
+        if (!line_is_string(line) && !line_is_section(line) && line != "" &&
+            line[0] != '#')
+            LCPP_ERROR("");
+    }
+
     void parse_file_lines() {
         std::ifstream is(file_info.path);
 
@@ -191,6 +192,8 @@ namespace LibCfgPP {
                 line = remove_whitespaces(line);
 
             line = remove_tl_whitespaces(line);
+
+            scan_the_line_for_type(line);
 
             if (line_is_section(line) && !section_detected)
                 section_detected = true;
@@ -213,7 +216,7 @@ namespace LibCfgPP {
 
     void CfgFile::open(const std::string &path) {
         if (!file_exists(path))
-            print_an_error("The file called \"" + path +
+            LCPP_ERROR("The file called \"" + path +
                            "\" that you want to open does not exist in the "
                            "specified path.");
 
@@ -222,7 +225,7 @@ namespace LibCfgPP {
                                          path.length() - path.find('.'))) ==
                  file_types.end()) ||
             (path.find('.') == std::string::npos))
-            print_an_error(
+            LCPP_ERROR(
                 "The type of file you are trying to open should be one "
                 "of the following: \".cfg\", \".conf\" or \".config\".");
 
@@ -243,7 +246,7 @@ namespace LibCfgPP {
 
     void CfgFile::update_file() {
         if (!is_open())
-            print_an_error("It is not possible to update the file because it "
+            LCPP_ERROR("It is not possible to update the file because it "
                            "is not open.");
 
         std::ofstream ofs(file_info.path);
