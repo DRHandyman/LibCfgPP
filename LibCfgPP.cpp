@@ -223,10 +223,8 @@ namespace LibCfgPP {
 
             scan_the_line_for_type(line);
 
-            if (line_is_section(line) && !section_detected) {
+            if (line_is_section(line) && !section_detected)
                 section_detected = true;
-                std::cout << get_section_key(line) << std::endl;
-            }
 
             if (section_detected && !line_is_section(line) &&
                 remove_whitespaces(line) != "")
