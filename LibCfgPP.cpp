@@ -190,7 +190,7 @@ namespace LibCfgPP {
             if (remove_whitespaces(line).empty())
                 line = remove_whitespaces(line);
 
-            remove_tl_whitespaces(line);
+            line = remove_tl_whitespaces(line);
 
             if (line_is_section(line) && !section_detected)
                 section_detected = true;
