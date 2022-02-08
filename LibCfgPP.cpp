@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <fstream>
+#include <iostream>
 #include <set>
 #include <sys/stat.h>
 #include <vector>
@@ -16,6 +17,10 @@ namespace LibCfgPP {
     enum { TERMINATE_THE_PROGRAM = 1 };
 
     const std::set<std::string> file_types = {".cfg", ".conf", ".config"};
+
+    template <typename T> void LCPP_LOG(const T &message) {
+        std::cout << "LCPP_LOG: " << message << std::endl;
+    }
 
     bool file_exists(const std::string &path) {
         struct stat buffer;
@@ -35,8 +40,28 @@ namespace LibCfgPP {
         return str;
     }
 
+    std::string line_trim_comment(const std::string &line) {
+        if (std::count(line.begin(), line.end(), '"') >= 2) {
+            if (line.find('#') != std::string::npos) {
+                std::string output = line;
+
+                for (uint32_t i = 0; i < line.length(); i++) {
+                    if ((line[i] == '#' && i > line.find_last_of('"')) ||
+                        (line[i] == '#' && i < line.find('"'))) {
+                        output = line.substr(0, i);
+                        break;
+                    }
+                }
+
+                return output;
+            }
+        }
+
+        return line;
+    }
+
     bool line_is_string(std::string line) {
-        line = remove_whitespaces(line);
+        line = remove_whitespaces(line_trim_comment(line));
 
         if (line.find('=') != std::string::npos &&
             line.find('"') != std::string::npos &&
@@ -52,9 +77,9 @@ namespace LibCfgPP {
     }
 
     bool line_is_section(std::string str) {
-        str = remove_whitespaces(str);
+        str = remove_whitespaces(line_trim_comment(str));
 
-        return str[0] == '[' && str.back() == ']' ? true : false;
+        return str[0] == '[' && str.back() == ']';
     }
 
     // Adds or deletes empty lines in the file.
@@ -87,7 +112,8 @@ namespace LibCfgPP {
                     i + 1 < file_info.lines.size()) {
                     file_info.lines.erase(file_info.lines.begin() + (i + 1));
                     continue;
-                } else if (line_is_section(file_info.lines[i]) && (int64_t)i - 1 >= 0 &&
+                } else if (line_is_section(file_info.lines[i]) &&
+                           (int64_t)i - 1 >= 0 &&
                            file_info.lines[i - 1] != "") {
                     file_info.lines.insert(file_info.lines.begin() + i, "");
                     i++;
