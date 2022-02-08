@@ -24,7 +24,8 @@ namespace LibCfgPP {
     }
 
     template <typename T> void LCPP_ERROR(const T &message) {
-        std::cout << "[ERROR][LibCfg++]: " << message << std::endl;
+        std::cout << "[\x1B[31mERROR\033[0m][LibCfg++]: " << message
+                  << std::endl;
 
         if (TERMINATE_THE_PROGRAM)
             exit(EXIT_FAILURE);
@@ -217,17 +218,16 @@ namespace LibCfgPP {
     void CfgFile::open(const std::string &path) {
         if (!file_exists(path))
             LCPP_ERROR("The file called \"" + path +
-                           "\" that you want to open does not exist in the "
-                           "specified path.");
+                       "\" that you want to open does not exist in the "
+                       "specified path.");
 
         if ((path.find('.') != std::string::npos &&
              file_types.find(path.substr(path.find_last_of('.'),
                                          path.length() - path.find('.'))) ==
                  file_types.end()) ||
             (path.find('.') == std::string::npos))
-            LCPP_ERROR(
-                "The type of file you are trying to open should be one "
-                "of the following: \".cfg\", \".conf\" or \".config\".");
+            LCPP_ERROR("The type of file you are trying to open should be one "
+                       "of the following: \".cfg\", \".conf\" or \".config\".");
 
         file_info.path = path;
         file_info.is_open = true;
@@ -247,7 +247,7 @@ namespace LibCfgPP {
     void CfgFile::update_file() {
         if (!is_open())
             LCPP_ERROR("It is not possible to update the file because it "
-                           "is not open.");
+                       "is not open.");
 
         std::ofstream ofs(file_info.path);
 
