@@ -21,7 +21,7 @@ namespace LibCfgPP {
     }
 
     void LCPP_ERROR(const std::string &message) {
-        throw "[\x1B[31mERROR\033[0m][LibCfg++]: " + message;
+        throw exception("[\x1B[31mERROR\033[0m][LibCfg++]: " + message);
     }
 
     std::string remove_whitespaces(std::string str) {
