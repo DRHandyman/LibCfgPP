@@ -1,6 +1,5 @@
 #include <algorithm>
 #include <fstream>
-#include <iostream>
 #include <set>
 #include <sys/stat.h>
 #include <vector>
@@ -14,8 +13,6 @@ namespace LibCfgPP {
         bool is_open = false;
     } file_info;
 
-    enum { TERMINATE_THE_PROGRAM = 1 };
-
     const std::set<std::string> file_types = {".cfg", ".conf", ".config"};
 
     bool file_exists(const std::string &path) {
@@ -23,12 +20,8 @@ namespace LibCfgPP {
         return (stat(path.c_str(), &buffer) == 0);
     }
 
-    template <typename T> void LCPP_ERROR(const T &message) {
-        std::cout << "[\x1B[31mERROR\033[0m][LibCfg++]: " << message
-                  << std::endl;
-
-        if (TERMINATE_THE_PROGRAM)
-            exit(EXIT_FAILURE);
+    void LCPP_ERROR(const std::string &message) {
+        throw "[\x1B[31mERROR\033[0m][LibCfg++]: " + message;
     }
 
     std::string remove_whitespaces(std::string str) {
@@ -284,8 +277,50 @@ namespace LibCfgPP {
         ofs.close();
     }
 
-    std::string CfgFile::read(const std::string &string_key) {}
+    std::string CfgFile::read(const std::string &string_key) {
+        bool found_string = false;
+
+        std::string output;
+
+        for (const std::string &line : file_info.lines) {
+            if (line_is_section(line))
+                break;
+            if (line_is_string(line) && get_string_key(line) == string_key) {
+                output = get_string_value(line);
+                found_string = true;
+            }
+        }
+
+        if (!found_string)
+            LCPP_ERROR("");
+
+        return output;
+    }
 
     std::string CfgFile::read(const std::string &section_key,
-                              const std::string &string_key) {}
+                              const std::string &string_key) {
+        bool section_detected = false, found_string = false;
+
+        std::string output;
+
+        for (const std::string &line : file_info.lines) {
+            if (line_is_section(line) && get_section_key(line) == section_key) {
+                section_detected = true;
+                continue;
+            } else if (line_is_section(line) &&
+                       get_section_key(line) != section_key)
+                section_detected = false;
+
+            if (section_detected && line_is_string(line) &&
+                get_string_key(line) == string_key) {
+                output = get_string_value(line);
+                found_string = true;
+            }
+        }
+
+        if (!found_string)
+            LCPP_ERROR("");
+
+        return output;
+    }
 } // namespace LibCfgPP
