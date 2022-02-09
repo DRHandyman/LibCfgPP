@@ -13,6 +13,8 @@ namespace LibCfgPP {
         bool is_open = false;
     } file_info;
 
+    enum { LCPP_DEFAULT_ERROR = -1 };
+
     const std::set<std::string> file_types = {".cfg", ".conf", ".config"};
 
     bool file_exists(const std::string &path) {
@@ -20,8 +22,12 @@ namespace LibCfgPP {
         return (stat(path.c_str(), &buffer) == 0);
     }
 
-    void LCPP_ERROR(const std::string &message) {
-        throw exception("[\x1B[31mERROR\033[0m][LibCfg++]: " + message);
+    void LCPP_ERROR(const std::string &message, const int &line_id) {
+        if (line_id == LCPP_DEFAULT_ERROR)
+            throw exception("[\x1B[31mERROR\033[0m][LibCfg++]: " + message);
+        else if (line_id > LCPP_DEFAULT_ERROR)
+            throw exception("[\x1B[31mERROR\033[0m][LibCfg++][" +
+                            std::to_string(line_id) + "]: " + message);
     }
 
     std::string remove_whitespaces(std::string str) {
@@ -195,13 +201,16 @@ namespace LibCfgPP {
         }
     }
 
-    void scan_the_line_for_type(const std::string &line) {
+    void scan_the_line_for_type(const std::string &line,
+                                const uint32_t &line_id) {
         if (!line_is_string(line) && !line_is_section(line) && line != "" &&
             line[0] != '#')
-            LCPP_ERROR("");
+            LCPP_ERROR("Unidentified line type", line_id);
     }
 
     void parse_file_lines() {
+        uint32_t i = 0;
+
         std::ifstream is(file_info.path);
 
         std::string line;
@@ -212,9 +221,11 @@ namespace LibCfgPP {
             if (remove_whitespaces(line).empty())
                 line = remove_whitespaces(line);
 
+            i++;
+
             line = remove_tl_whitespaces(line);
 
-            scan_the_line_for_type(line);
+            scan_the_line_for_type(line, i);
 
             if (line_is_section(line) && !section_detected)
                 section_detected = true;
@@ -238,8 +249,9 @@ namespace LibCfgPP {
     void CfgFile::open(const std::string &path) {
         if (!file_exists(path))
             LCPP_ERROR("The file called \"" + path +
-                       "\" that you want to open does not exist in the "
-                       "specified path.");
+                           "\" that you want to open does not exist in the "
+                           "specified path.",
+                       LCPP_DEFAULT_ERROR);
 
         if ((path.find('.') != std::string::npos &&
              file_types.find(path.substr(path.find_last_of('.'),
@@ -247,7 +259,8 @@ namespace LibCfgPP {
                  file_types.end()) ||
             (path.find('.') == std::string::npos))
             LCPP_ERROR("The type of file you are trying to open should be one "
-                       "of the following: \".cfg\", \".conf\" or \".config\".");
+                       "of the following: \".cfg\", \".conf\" or \".config\".",
+                       LCPP_DEFAULT_ERROR);
 
         file_info.path = path;
         file_info.is_open = true;
@@ -267,7 +280,8 @@ namespace LibCfgPP {
     void CfgFile::update_file() {
         if (!is_open())
             LCPP_ERROR("It is not possible to update the file because it "
-                       "is not open.");
+                       "is not open.",
+                       LCPP_DEFAULT_ERROR);
 
         std::ofstream ofs(file_info.path);
 
@@ -292,20 +306,24 @@ namespace LibCfgPP {
         }
 
         if (!found_string)
-            LCPP_ERROR("");
+            LCPP_ERROR("It is impossible to find the string under the key \"" +
+                           string_key + "\" in the file.",
+                       LCPP_DEFAULT_ERROR);
 
         return output;
     }
 
     std::string CfgFile::read(const std::string &section_key,
                               const std::string &string_key) {
-        bool section_detected = false, found_string = false;
+        bool section_detected = false, found_string = false,
+             found_section = false;
 
         std::string output;
 
         for (const std::string &line : file_info.lines) {
             if (line_is_section(line) && get_section_key(line) == section_key) {
                 section_detected = true;
+                found_section = true;
                 continue;
             } else if (line_is_section(line) &&
                        get_section_key(line) != section_key)
@@ -318,8 +336,15 @@ namespace LibCfgPP {
             }
         }
 
-        if (!found_string)
-            LCPP_ERROR("");
+        if (!found_section)
+            LCPP_ERROR("It is impossible to find the section under the key \"" +
+                           section_key + "\" in the file.",
+                       LCPP_DEFAULT_ERROR);
+        else if (!found_string)
+            LCPP_ERROR("It is impossible to find a string under the key \"" +
+                           string_key + "\" in the \"" + section_key +
+                           "\" section",
+                       LCPP_DEFAULT_ERROR);
 
         return output;
     }
