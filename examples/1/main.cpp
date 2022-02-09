@@ -10,7 +10,7 @@ string section_key = "section", string_key = "string";
 
 int main() {
     try {
-        cfg_file.open("cfg_file.cfg");
+        cfg_file.open("../cfg_file.cfg");
 
         cout << string_key + " = \"" + cfg_file.read("string") + "\"\n" << endl;
         cout << '[' + section_key + ']' << endl
