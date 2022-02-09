@@ -31,12 +31,7 @@ namespace LibCfgPP {
     }
 
     std::string remove_whitespaces(std::string str) {
-        str.erase(remove_if(str.begin(), str.end(),
-                            [](char ch) {
-                                return std::isspace<char>(
-                                    ch, std::locale::classic());
-                            }),
-                  str.end());
+        str.erase(remove_if(str.begin(), str.end(), isspace), str.end());
 
         return str;
     }
