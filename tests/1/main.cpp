@@ -1,4 +1,4 @@
-// A test for the time it takes to read the value of a string a million times
+// A test for the time it takes to read the value of a string a million times.
 
 #include <ctime>
 #include <iostream>
