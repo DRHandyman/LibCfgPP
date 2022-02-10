@@ -15,7 +15,7 @@ int main() {
     start = clock();
 
     try {
-        cfg_file.open("../cfg_file.cfg");
+        cfg_file.open("cfg_file.cfg");
 
         for (int i = 0; i < 1000000; i++)
             cfg_file.read("string");
