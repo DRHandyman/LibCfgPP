@@ -1,6 +1,5 @@
 #include <algorithm>
 #include <fstream>
-#include <set>
 #include <sys/stat.h>
 #include <vector>
 
@@ -15,7 +14,8 @@ namespace LibCfgPP {
 
     enum { LCPP_DEFAULT_ERROR = -1 };
 
-    const std::set<std::string> file_types = {".cfg", ".conf", ".config"};
+    const std::vector<std::string> file_types = {".cfg", ".conf", ".config"};
+    const std::vector<char> forbidden_characters = {'[', ']', '"'};
 
     bool file_exists(const std::string &path) {
         struct stat buffer;
@@ -248,10 +248,12 @@ namespace LibCfgPP {
                            "specified path.",
                        LCPP_DEFAULT_ERROR);
 
-        if ((path.find('.') != std::string::npos &&
-             file_types.find(path.substr(path.find_last_of('.'),
-                                         path.length() - path.find('.'))) ==
-                 file_types.end()) ||
+        bool _bool = std::find(file_types.begin(), file_types.end(),
+                               path.substr(path.find(
+                                   '.', path.length() - path.find('.') - 1))) !=
+                     file_types.end();
+
+        if ((path.find('.') != std::string::npos && !_bool) ||
             (path.find('.') == std::string::npos))
             LCPP_ERROR("The type of file you are trying to open should be one "
                        "of the following: \".cfg\", \".conf\" or \".config\".",
