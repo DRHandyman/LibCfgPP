@@ -200,7 +200,7 @@ namespace LibCfgPP {
                                 const uint32_t &line_id) {
         if (!line_is_string(line) && !line_is_section(line) && line != "" &&
             line[0] != '#')
-            LCPP_ERROR("Unidentified line type", line_id);
+            LCPP_ERROR("Unidentified line type.", line_id);
     }
 
     void parse_file_lines() {
