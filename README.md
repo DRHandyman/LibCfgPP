@@ -40,10 +40,10 @@ int main() {
 ```
 # cfg_file.cfg
 
-string = "value" 
+string = "value" # Test comment
  
-[section] 
-    string = "value" 
+[section]
+    string = "value" # Test comment
 ```
 # Notes
 * You can view code examples in the [examples](https://github.com/DRHandyman/LibCfgPP/tree/main/examples) folder.
