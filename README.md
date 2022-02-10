@@ -2,6 +2,7 @@
 LibCfg++ is a convenient C++ library for working with configuration files.
 # What can he do?
 * Manipulate strings (Read and change string values).
+* Create and read sections.
 * Format the file in its own style.
 * Scan the file for errors.
 # Dependencies
