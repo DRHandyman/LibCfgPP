@@ -1,5 +1,5 @@
 .vscode
 main.cpp
 a.out
-Makefile
+/Makefile
 cfg_file.cfg
