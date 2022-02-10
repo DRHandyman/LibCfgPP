@@ -7,7 +7,7 @@ LibCfg++ is a convenient C++ library for working with configuration files.
 * Scan the file for errors.
 # Dependencies
 ### Linux:
-* [G++](https://gcc.gnu.org/projects/cxx-status.html#cxx11) (GCC >= 4.8.1)
+* [G++](https://gcc.gnu.org/projects/cxx-status.html#cxx11) (GCC >= 4.8.1) - ```sudo apt-get install g++```
 ### Windows:
 * [MinGW](https://sourceforge.net/projects/mingw/) or [Visual C++](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
 # Usage
