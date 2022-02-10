@@ -146,15 +146,16 @@ namespace LibCfgPP {
         if (line.find('#') != std::string::npos) {
             if (std::count(line.begin(), line.end(), '#') >= 2) {
                 for (uint32_t i = 0; i < line.length(); i++) {
-                    if (line[i] == '#' && i > line.find_last_of('#') ||
-                        line[i] == '#' && i < line.find('"'))
+                    if ((line[i] == '#' && i > line.find_last_of('#')) ||
+                        (line[i] == '#' && i < line.find('"')))
                         return line.substr(i, line.length() - i);
                 }
             } else
                 return line.substr(line.find('#'),
                                    line.length() - line.find('#'));
-        } else
-            return "";
+        }
+
+        return "";
     }
 
     std::string get_section_key(const std::string &section) {
