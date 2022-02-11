@@ -372,4 +372,42 @@ namespace LibCfgPP {
                            string_key + "\" does not exist in the file.",
                        LCPP_DEFAULT_ERROR);
     }
+
+    void CfgFile::change_the_value(const std::string &section_key,
+                                   const std::string &string_key,
+                                   const std::string &value) {
+        int i, section_id = -1, string_id = -1;
+
+        for (auto it = file_info.lines.begin(); it != file_info.lines.end();
+             it++) {
+            i = it - file_info.lines.begin();
+
+            if (get_section_key(file_info.lines[i]) == section_key)
+                section_id = i;
+        }
+
+        for (auto it = file_info.lines.begin() + (section_id + 1);
+             it != file_info.lines.end(); it++) {
+            i = it - file_info.lines.begin();
+
+            if (line_is_section(file_info.lines[i]))
+                break;
+
+            if (line_is_string(file_info.lines[i]) &&
+                get_string_key(file_info.lines[i]) == string_key)
+                string_id = i;
+        }
+
+        if (section_id == -1)
+            LCPP_ERROR("", LCPP_DEFAULT_ERROR);
+
+        if (string_id == -1)
+            LCPP_ERROR("", LCPP_DEFAULT_ERROR);
+
+        std::string output =
+            "    " + get_string_key(file_info.lines[string_id]) + " = \"" +
+            value + "\" " + get_line_comment(file_info.lines[string_id]);
+
+        file_info.lines[string_id] = output;
+    }
 } // namespace LibCfgPP
