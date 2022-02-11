@@ -22,4 +22,6 @@ int main() {
     } catch (const LibCfgPP::exception &ex) {
         cout << ex.what() << endl;
     }
+
+    return EXIT_SUCCESS;
 }
