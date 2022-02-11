@@ -1,7 +1,7 @@
 CPPFLAGS = -std=c++11 -Wall -Werror -pedantic
 
 LibCfgPP: main.o LibCfgPP.o
-	g++ $(CPPFLAGS) main.o LibCfgPP.o && make clean
+	g++ $(CPPFLAGS) main.o LibCfgPP.o && make clean -o a.out
 
 main.o: main.cpp
 	g++ $(CPPFLAGS) -c main.cpp
