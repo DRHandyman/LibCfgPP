@@ -346,4 +346,30 @@ namespace LibCfgPP {
 
         return output;
     }
+
+    void CfgFile::change_the_value(const std::string &string_key,
+                                   const std::string &value) {
+        int i, id = -1;
+
+        for (auto it = file_info.lines.begin(); it != file_info.lines.end();
+             it++) {
+            i = it - file_info.lines.begin();
+
+            if (line_is_section(file_info.lines[i]))
+                break;
+            if (line_is_string(file_info.lines[i]) &&
+                get_string_key(file_info.lines[i]) == string_key)
+                id = i;
+        }
+
+        if (id != -1)
+            file_info.lines[id] = get_string_key(file_info.lines[id]) +
+                                  " = \"" + value + "\" " +
+                                  get_line_comment(file_info.lines[id]);
+        else
+            LCPP_ERROR("It is not possible to change the value of the string, "
+                       "because the string under the key \"" +
+                           string_key + "\" does not exist in the file.",
+                       LCPP_DEFAULT_ERROR);
+    }
 } // namespace LibCfgPP
