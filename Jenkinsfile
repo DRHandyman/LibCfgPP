@@ -9,6 +9,7 @@ pipeline {
         }
         stage('Test') {
             steps {
+                sh 'cd examples/1'
                 sh 'echo "Running..."'
                 sh './a.out'
             }
