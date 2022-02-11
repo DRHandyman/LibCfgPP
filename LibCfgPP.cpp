@@ -399,10 +399,18 @@ namespace LibCfgPP {
         }
 
         if (section_id == -1)
-            LCPP_ERROR("", LCPP_DEFAULT_ERROR);
+            LCPP_ERROR("It was not possible to change the value of the string "
+                       "because the section under the key \"" +
+                           section_key + "\" was not found in the file.",
+                       LCPP_DEFAULT_ERROR);
 
         if (string_id == -1)
-            LCPP_ERROR("", LCPP_DEFAULT_ERROR);
+            LCPP_ERROR("It is impossible to change the value of the string, "
+                       "because the string under the key \"" +
+                           string_key +
+                           "\" was not found in the section under the key \"" +
+                           section_key + "\".",
+                       LCPP_DEFAULT_ERROR);
 
         std::string output =
             "    " + get_string_key(file_info.lines[string_id]) + " = \"" +
