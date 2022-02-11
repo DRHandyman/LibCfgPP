@@ -30,6 +30,12 @@ namespace LibCfgPP {
             read(const std::string &section_key, const std::string &string_key);
 
         void update_file();
+
+        void change_the_value(const std::string &string_key,
+                              const std::string &value),
+            change_the_value(const std::string &section,
+                             const std::string &string_key,
+                             const std::string &value);
     };
 } // namespace LibCfgPP
 
