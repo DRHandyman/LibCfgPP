@@ -2,8 +2,15 @@
 #define _LIBCFGPP_HPP
 
 #include <string>
+#include <vector>
 
 namespace LibCfgPP {
+    struct file_info {
+        std::string path;
+        std::vector<std::string> lines;
+        bool is_open = false;
+    };
+
     class exception : std::exception {
         std::string _msg;
 
@@ -74,6 +81,11 @@ namespace LibCfgPP {
             change_the_value(const std::string &section_key,
                              const std::string &string_key,
                              const std::string &value);
+
+      private:
+        std::string path;
+        std::vector<std::string> lines;
+        bool _is_open = false;
     };
 } // namespace LibCfgPP
 
