@@ -1,4 +1,4 @@
-# LibCfg++ [![Build Status](http://192.168.0.104:8080/job/LibCfgPP/job/main/badge/icon)](http://192.168.0.104:8080/job/LibCfgPP/job/main/)
+# LibCfg++ [![Build Status](http://libcfgpp.ddns.net:8080/buildStatus/icon?job=LibCfgPP%2Fmain)](http://libcfgpp.ddns.net:8080/job/LibCfgPP/job/main/)
 LibCfg++ is a convenient C++ library for working with configuration files.
 # What can it do?
 * Manipulate strings (Read and change string values).
