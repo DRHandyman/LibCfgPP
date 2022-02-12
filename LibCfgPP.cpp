@@ -1,17 +1,10 @@
 #include <algorithm>
 #include <fstream>
 #include <sys/stat.h>
-#include <vector>
 
 #include "LibCfgPP.hpp"
 
 namespace LibCfgPP {
-    struct file_info {
-        std::string path;
-        std::vector<std::string> lines;
-        bool is_open = false;
-    } file_info;
-
     enum { LCPP_DEFAULT_ERROR = -1 };
 
     const std::vector<std::string> file_types = {".cfg", ".conf", ".config"};
@@ -80,40 +73,36 @@ namespace LibCfgPP {
     }
 
     // Adds or deletes empty lines in the file.
-    void _void0() {
+    void _void0(std::vector<std::string> &lines) {
         bool found_not_empty_line = false;
 
         uint32_t i = 0;
 
-        while (i < file_info.lines.size()) {
-            if (file_info.lines[0].empty()) {
-                file_info.lines.erase(file_info.lines.begin());
+        while (i < lines.size()) {
+            if (lines[0].empty()) {
+                lines.erase(lines.begin());
                 continue;
             }
 
-            if (!file_info.lines[i].empty())
+            if (!lines[i].empty())
                 found_not_empty_line = true;
 
             if (found_not_empty_line) {
-                if (file_info.lines[i] == "" &&
-                    file_info.lines[i + 1].empty()) {
-                    file_info.lines.erase(file_info.lines.begin() + (i + 1));
+                if (lines[i] == "" && lines[i + 1].empty()) {
+                    lines.erase(lines.begin() + (i + 1));
                     continue;
                 }
-                if (file_info.lines.back().empty()) {
-                    file_info.lines.erase(file_info.lines.end());
+                if (lines.back().empty()) {
+                    lines.erase(lines.end());
                     continue;
                 }
-                if (line_is_section(file_info.lines[i]) &&
-                    file_info.lines[i + 1] == "" &&
-                    i + 1 < file_info.lines.size()) {
-                    file_info.lines.erase(file_info.lines.begin() + (i + 1));
+                if (line_is_section(lines[i]) && lines[i + 1] == "" &&
+                    i + 1 < lines.size()) {
+                    lines.erase(lines.begin() + (i + 1));
                     continue;
-                } else if (line_is_section(file_info.lines[i]) &&
-                           (int64_t)i - 1 >= 0 &&
-                           !remove_whitespaces(file_info.lines[i - 1])
-                                .empty()) {
-                    file_info.lines.insert(file_info.lines.begin() + i, "");
+                } else if (line_is_section(lines[i]) && (int64_t)i - 1 >= 0 &&
+                           !remove_whitespaces(lines[i - 1]).empty()) {
+                    lines.insert(lines.begin() + i, "");
                     i++;
                     continue;
                 }
@@ -174,12 +163,12 @@ namespace LibCfgPP {
         return line;
     }
 
-    void format_the_file() {
+    void format_the_file(std::vector<std::string> &lines) {
         bool section_detected = false;
 
-        _void0();
+        _void0(lines);
 
-        for (std::string &line : file_info.lines) {
+        for (std::string &line : lines) {
             if (line_is_section(line) && !section_detected)
                 section_detected = true;
 
@@ -204,10 +193,11 @@ namespace LibCfgPP {
             LCPP_ERROR("Unidentified line type.", line_id);
     }
 
-    void parse_file_lines() {
+    void parse_file_lines(const std::string &file_path,
+                          std::vector<std::string> &lines) {
         uint32_t i = 0;
 
-        std::ifstream is(file_info.path);
+        std::ifstream is(file_path);
 
         std::string line;
 
@@ -230,10 +220,10 @@ namespace LibCfgPP {
                 remove_whitespaces(line) != "")
                 line = "    " + line;
 
-            file_info.lines.push_back(line);
+            lines.push_back(line);
         }
 
-        format_the_file();
+        format_the_file(lines);
 
         is.close();
     }
@@ -260,20 +250,20 @@ namespace LibCfgPP {
                        "of the following: \".cfg\", \".conf\" or \".config\".",
                        LCPP_DEFAULT_ERROR);
 
-        file_info.path = path;
-        file_info.is_open = true;
+        this->path = path;
+        _is_open = true;
 
-        parse_file_lines();
+        parse_file_lines(path, lines);
 
         update_file();
     }
 
     void CfgFile::close() {
-        file_info.path.clear();
-        file_info.is_open = false;
+        path.clear();
+        _is_open = false;
     }
 
-    bool CfgFile::is_open() { return file_info.is_open; }
+    bool CfgFile::is_open() { return _is_open; }
 
     void CfgFile::update_file() {
         if (!is_open())
@@ -281,9 +271,9 @@ namespace LibCfgPP {
                        "is not open.",
                        LCPP_DEFAULT_ERROR);
 
-        std::ofstream ofs(file_info.path);
+        std::ofstream ofs(path);
 
-        for (const std::string &line : file_info.lines)
+        for (const std::string &line : lines)
             ofs << line << std::endl;
 
         ofs.close();
@@ -294,7 +284,7 @@ namespace LibCfgPP {
 
         std::string output;
 
-        for (const std::string &line : file_info.lines) {
+        for (const std::string &line : lines) {
             if (line_is_section(line))
                 break;
             if (line_is_string(line) && get_string_key(line) == string_key) {
@@ -318,7 +308,7 @@ namespace LibCfgPP {
 
         std::string output;
 
-        for (const std::string &line : file_info.lines) {
+        for (const std::string &line : lines) {
             if (line_is_section(line) && get_section_key(line) == section_key) {
                 section_detected = true;
                 found_section = true;
@@ -351,21 +341,19 @@ namespace LibCfgPP {
                                    const std::string &value) {
         int i, id = -1;
 
-        for (auto it = file_info.lines.begin(); it != file_info.lines.end();
-             it++) {
-            i = it - file_info.lines.begin();
+        for (auto it = lines.begin(); it != lines.end(); it++) {
+            i = it - lines.begin();
 
-            if (line_is_section(file_info.lines[i]))
+            if (line_is_section(lines[i]))
                 break;
-            if (line_is_string(file_info.lines[i]) &&
-                get_string_key(file_info.lines[i]) == string_key)
+            if (line_is_string(lines[i]) &&
+                get_string_key(lines[i]) == string_key)
                 id = i;
         }
 
         if (id != -1)
-            file_info.lines[id] = get_string_key(file_info.lines[id]) +
-                                  " = \"" + value + "\" " +
-                                  get_line_comment(file_info.lines[id]);
+            lines[id] = get_string_key(lines[id]) + " = \"" + value + "\" " +
+                        get_line_comment(lines[id]);
         else
             LCPP_ERROR("It is not possible to change the value of the string, "
                        "because the string under the key \"" +
@@ -378,23 +366,22 @@ namespace LibCfgPP {
                                    const std::string &value) {
         int i, section_id = -1, string_id = -1;
 
-        for (auto it = file_info.lines.begin(); it != file_info.lines.end();
-             it++) {
-            i = it - file_info.lines.begin();
+        for (auto it = lines.begin(); it != lines.end(); it++) {
+            i = it - lines.begin();
 
-            if (get_section_key(file_info.lines[i]) == section_key)
+            if (get_section_key(lines[i]) == section_key)
                 section_id = i;
         }
 
-        for (auto it = file_info.lines.begin() + (section_id + 1);
-             it != file_info.lines.end(); it++) {
-            i = it - file_info.lines.begin();
+        for (auto it = lines.begin() + (section_id + 1); it != lines.end();
+             it++) {
+            i = it - lines.begin();
 
-            if (line_is_section(file_info.lines[i]))
+            if (line_is_section(lines[i]))
                 break;
 
-            if (line_is_string(file_info.lines[i]) &&
-                get_string_key(file_info.lines[i]) == string_key)
+            if (line_is_string(lines[i]) &&
+                get_string_key(lines[i]) == string_key)
                 string_id = i;
         }
 
@@ -412,10 +399,10 @@ namespace LibCfgPP {
                            section_key + "\".",
                        LCPP_DEFAULT_ERROR);
 
-        std::string output =
-            "    " + get_string_key(file_info.lines[string_id]) + " = \"" +
-            value + "\" " + get_line_comment(file_info.lines[string_id]);
+        std::string output = "    " + get_string_key(lines[string_id]) +
+                             " = \"" + value + "\" " +
+                             get_line_comment(lines[string_id]);
 
-        file_info.lines[string_id] = output;
+        lines[string_id] = output;
     }
 } // namespace LibCfgPP
