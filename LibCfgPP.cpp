@@ -228,8 +228,6 @@ namespace LibCfgPP {
         is.close();
     }
 
-    CfgFile::CfgFile() {}
-
     CfgFile::CfgFile(const std::string &path) { open(path); }
 
     void CfgFile::open(const std::string &path) {
