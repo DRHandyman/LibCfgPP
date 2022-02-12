@@ -258,11 +258,6 @@ namespace LibCfgPP {
         update_file();
     }
 
-    void CfgFile::close() {
-        path.clear();
-        _is_open = false;
-    }
-
     bool CfgFile::is_open() { return _is_open; }
 
     void CfgFile::update_file() {
