@@ -19,8 +19,6 @@ int main() {
 
         for (int i = 0; i < 1000000; i++)
             cfg_file.read("string");
-
-        cfg_file.close();
     } catch (const LibCfgPP::exception &ex) {
         cout << ex.what() << endl;
     }
