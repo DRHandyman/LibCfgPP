@@ -37,6 +37,9 @@ namespace LibCfgPP {
          */
         void open(const std::string &path);
 
+        // Closes the file.
+        void close();
+
         // Returns true if the file is open, false if closed.
         bool is_open();
 
