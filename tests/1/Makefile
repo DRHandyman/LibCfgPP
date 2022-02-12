@@ -10,4 +10,4 @@ LibCfgPP.o: ../../LibCfgPP.cpp ../../LibCfgPP.hpp
 	g++ $(CPPFLAGS) -c ../../LibCfgPP.cpp
 
 clean:
-	rm -rf *.o
+	del *.o
