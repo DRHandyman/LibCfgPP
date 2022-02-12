@@ -23,6 +23,8 @@ int main() {
         cout << ex.what() << endl;
     }
 
+    cfg_file.close();
+
     end = clock();
 
     double time_taken = double(end - start) / double(CLOCKS_PER_SEC);
