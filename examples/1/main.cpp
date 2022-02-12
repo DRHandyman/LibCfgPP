@@ -17,8 +17,6 @@ int main() {
              << "   " + string_key + " = \"" +
                     cfg_file.read("section", "string") + '"'
              << endl;
-
-        cfg_file.close();
     } catch (const LibCfgPP::exception &ex) {
         cout << ex.what() << endl;
     }
