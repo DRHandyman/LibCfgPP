@@ -37,29 +37,36 @@ namespace LibCfgPP {
         bool is_open();
 
         /**
-         * @brief Reads the value of a specific string.
-         *
+         * @brief Returns the value of a specific string.
+         * @param string_key - String key.
          */
         std::string read(const std::string &string_key),
-            // Reads the value of a specific string from a specific section.
+            /**
+             * @brief Returns the value of a specific string from a specific
+             * section.
+             * @param section_key - Section Key.
+             * @param string_key - String key.
+             */
             read(const std::string &section_key, const std::string &string_key);
 
         /**
          * @details Let's say you have made changes in the file, for example,
-         *          changed the value of a string. In order for the changes to take
-         *          effect, you will need to call this function.
+         *          changed the value of a string. In order for the changes to
+         * take effect, you will need to call this function.
          */
         void update_file();
 
         /**
-         * @brief Changes the value of a specific string to the one you specified.
+         * @brief Changes the value of a specific string to the one you
+         * specified.
          * @param string_key - String key.
          * @param value - The value to assign to the string.
          */
         void change_the_value(const std::string &string_key,
                               const std::string &value),
             /**
-             * @brief Changes the value of a specific string in a specific section.
+             * @brief Changes the value of a specific string in a specific
+             * section.
              * @param section_key - Section Key.
              * @param string_key - String key.
              * @param value - The value to assign to the string.
