@@ -7,8 +7,8 @@
 namespace LibCfgPP {
     enum { LCPP_DEFAULT_ERROR = -1 };
 
-    const std::vector<std::string> file_types = {".cfg", ".conf", ".config"};
-    const std::vector<char> forbidden_characters = {'[', ']', '"'};
+    constexpr const char *file_types[3] = {".cfg", ".conf", ".config"};
+    constexpr const char forbidden_characters[3] = {'[', ']', '"'};
 
     bool file_exists(const std::string &path) {
         struct stat buffer;
@@ -239,10 +239,10 @@ namespace LibCfgPP {
                            "specified path.",
                        LCPP_DEFAULT_ERROR);
 
-        bool _bool = std::find(file_types.begin(), file_types.end(),
+        bool _bool = std::find(std::begin(file_types), std::end(file_types),
                                path.substr(path.find(
                                    '.', path.length() - path.find('.') - 1))) !=
-                     file_types.end();
+                     std::end(file_types);
 
         if ((path.find('.') != std::string::npos && !_bool) ||
             (path.find('.') == std::string::npos))
@@ -364,19 +364,14 @@ namespace LibCfgPP {
     void CfgFile::change_the_value(const std::string &section_key,
                                    const std::string &string_key,
                                    const std::string &value) {
-        int i, section_id = -1, string_id = -1;
+        int section_id = -1, string_id = -1;
 
-        for (auto it = lines.begin(); it != lines.end(); it++) {
-            i = it - lines.begin();
-
+        for (uint32_t i = 0; i < lines.size(); i++) {
             if (get_section_key(lines[i]) == section_key)
                 section_id = i;
         }
 
-        for (auto it = lines.begin() + (section_id + 1); it != lines.end();
-             it++) {
-            i = it - lines.begin();
-
+        for (uint32_t i = 0; i < lines.size(); i++) {
             if (line_is_section(lines[i]))
                 break;
 
