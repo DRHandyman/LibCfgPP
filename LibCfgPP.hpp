@@ -27,7 +27,7 @@ namespace LibCfgPP {
         /**
          * @brief Main constructor
          */
-        CfgFile();
+        CfgFile() = default;
 
         CfgFile(const std::string &path);
 
@@ -59,7 +59,7 @@ namespace LibCfgPP {
         /**
          * @details Let's say you have made changes in the file, for example,
          *          changed the value of a string. In order for the changes to
-         * take effect, you will need to call this function.
+         *          take effect, you will need to call this function.
          */
         void update_file();
 
