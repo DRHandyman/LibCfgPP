@@ -1,4 +1,4 @@
-# LibCfg++ [![Build Status](http://libcfgpp.ddns.net:8080/buildStatus/icon?job=LibCfgPP%2Fmain)](http://libcfgpp.ddns.net:8080/job/LibCfgPP/job/main/)
+# LibCfg++ [![C/C++ CI](https://github.com/DRHandyman/LibCfgPP/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/DRHandyman/LibCfgPP/actions/workflows/c-cpp.yml)
 LibCfg++ is a convenient C++ library for working with configuration files.
 # What can it do?
 * Manipulate strings (Read and change string values).
