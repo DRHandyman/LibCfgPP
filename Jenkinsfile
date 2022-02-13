@@ -7,5 +7,6 @@ pipeline {
         sh 'cd \'./examples/Reading strings and sections/\' && make'
       }
     }
+
   }
 }
