@@ -349,10 +349,11 @@ namespace LibCfgPP {
                 id = i;
         }
 
-        if (id != -1)
+        if (id != -1) {
             lines[id] = get_string_key(lines[id]) + " = \"" + value + "\" " +
                         get_line_comment(lines[id]);
-        else
+            printf("%s\n", lines[id].c_str());
+        } else
             LCPP_ERROR("It is not possible to change the value of the string, "
                        "because the string under the key \"" +
                            string_key + "\" does not exist in the file.",
@@ -365,17 +366,9 @@ namespace LibCfgPP {
         int section_id = -1, string_id = -1;
 
         for (uint32_t i = 0; i < lines.size(); i++) {
-            if (get_section_key(lines[i]) == section_key)
+            if (line_is_section(lines[i]) &&
+                get_section_key(lines[i]) == section_key)
                 section_id = i;
-        }
-
-        for (uint32_t i = 0; i < lines.size(); i++) {
-            if (line_is_section(lines[i]))
-                break;
-
-            if (line_is_string(lines[i]) &&
-                get_string_key(lines[i]) == string_key)
-                string_id = i;
         }
 
         if (section_id == -1)
@@ -383,6 +376,14 @@ namespace LibCfgPP {
                        "because the section under the key \"" +
                            section_key + "\" was not found in the file.",
                        LCPP_DEFAULT_ERROR);
+
+        for (uint32_t i = section_id + 1; i < lines.size(); i++) {
+            if (line_is_section(lines[i]))
+                break;
+            if (line_is_string(lines[i]) &&
+                get_string_key(lines[i]) == string_key)
+                string_id = i;
+        }
 
         if (string_id == -1)
             LCPP_ERROR("It is impossible to change the value of the string, "
@@ -392,10 +393,7 @@ namespace LibCfgPP {
                            section_key + "\".",
                        LCPP_DEFAULT_ERROR);
 
-        std::string output = "    " + get_string_key(lines[string_id]) +
-                             " = \"" + value + "\" " +
-                             get_line_comment(lines[string_id]);
-
-        lines[string_id] = output;
+        lines[string_id] = "    " + string_key + " = \"" + value + "\" " +
+                           get_line_comment(lines[string_id]);
     }
 } // namespace LibCfgPP
