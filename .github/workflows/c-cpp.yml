@@ -14,4 +14,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: build
-      run: cd examples/1 && make
+      run: cd examples/Reading\ strings\ and\ sections/ && make
