@@ -33,7 +33,7 @@ int main() {
         cout << cfg_file.read("string") << endl
              << cfg_file.read("section", "string") << endl;
     } catch (const LibCfgPP::LCPPException &ex) {
-        std::cerr << ex.what() << '\n';
+        cout << ex.what() << endl;
     }
 
     cfg_file.close();
