@@ -17,10 +17,10 @@ namespace LibCfgPP {
 
     void LCPP_ERROR(const std::string &message, const int &line_id) {
         if (line_id == LCPP_DEFAULT_ERROR)
-            throw exception("[\x1B[31mERROR\033[0m][LibCfg++]: " + message);
+            throw LCPPException("[\x1B[31mERROR\033[0m][LibCfg++]: " + message);
         else if (line_id > LCPP_DEFAULT_ERROR)
-            throw exception("[\x1B[31mERROR\033[0m][LibCfg++][" +
-                            std::to_string(line_id) + "]: " + message);
+            throw LCPPException("[\x1B[31mERROR\033[0m][LibCfg++][" +
+                                std::to_string(line_id) + "]: " + message);
     }
 
     std::string remove_whitespaces(std::string str) {
