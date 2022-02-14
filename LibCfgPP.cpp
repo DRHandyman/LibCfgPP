@@ -253,7 +253,7 @@ namespace LibCfgPP {
 
         parse_file_lines(path, lines);
 
-        update_file();
+        update();
     }
 
     void CfgFile::close() {
@@ -263,7 +263,7 @@ namespace LibCfgPP {
 
     bool CfgFile::is_open() { return _is_open; }
 
-    void CfgFile::update_file() {
+    void CfgFile::update() {
         if (!is_open())
             LCPP_ERROR("It is not possible to update the file because it "
                        "is not open.",
