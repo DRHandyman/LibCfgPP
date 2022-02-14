@@ -44,7 +44,7 @@ namespace LibCfgPP {
         /**
          * @brief Returns the value of a specific string.
          * @param string_key - The key of the string you want to change the
-         * value of.
+         *        value of.
          */
         std::string read(const std::string &string_key),
             /**
