@@ -258,7 +258,7 @@ namespace LibCfgPP {
 
     void CfgFile::close() {
         lines.clear();
-        path.empty();
+        path.clear();
     }
 
     bool CfgFile::is_open() { return _is_open; }
