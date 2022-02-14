@@ -5,11 +5,11 @@
 #include <vector>
 
 namespace LibCfgPP {
-    class exception : std::exception {
+    class LCPPException : std::exception {
         std::string _msg;
 
       public:
-        exception(const std::string &msg) : _msg(msg) {}
+        LCPPException(const std::string &msg) : _msg(msg){};
 
         virtual const char *what() const noexcept override {
             return _msg.c_str();
