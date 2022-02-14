@@ -50,7 +50,7 @@ string = "value" # Test comment
     string = "value" # Test comment
 ```
 * You can run the sample code on the [Replit](https://replit.com/@gorilla4/LibCfgPP#) website.
-# v[15.02.2022](https://github.com/DRHandyman/LibCfgPP/releases/tag/15.02.2022)
+# [15.02.2022](https://github.com/DRHandyman/LibCfgPP/releases/tag/15.02.2022)
 * Added the ability to read string values and read sections.
 * Added the ability to change the string value.
 # Notes
