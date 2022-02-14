@@ -51,4 +51,3 @@ string = "value" # Test comment
 ```
 # Notes
 * You can view code examples in the [examples](https://github.com/DRHandyman/LibCfgPP/tree/main/examples) folder.
-* The project is in beta testing, but at the moment it can already read string values.
