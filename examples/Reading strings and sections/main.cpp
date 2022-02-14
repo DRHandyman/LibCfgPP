@@ -13,7 +13,7 @@ int main() {
         cout << cfg_file.read("string") << endl;
 
         cout << cfg_file.read("section", "string") << endl;
-    } catch (const LibCfgPP::exception &ex) {
+    } catch (const LibCfgPP::LCPPException &ex) {
         cout << ex.what() << endl;
     }
 
