@@ -44,7 +44,7 @@ namespace LibCfgPP {
         std::string read(const std::string &string_key),
             /**
              * @brief Returns the value of a specific string from a specific
-             * section.
+             *        section.
              * @param section_key - Section Key.
              * @param string_key - String key.
              */
@@ -59,7 +59,7 @@ namespace LibCfgPP {
 
         /**
          * @brief Changes the value of a specific string to the one you
-         * specified.
+         *        specified.
          * @param string_key - String key.
          * @param value - The value to assign to the string.
          */
@@ -67,7 +67,7 @@ namespace LibCfgPP {
                               const std::string &value),
             /**
              * @brief Changes the value of a specific string in a specific
-             * section.
+             *        section.
              * @param section_key - Section Key.
              * @param string_key - String key.
              * @param value - The value to assign to the string.
