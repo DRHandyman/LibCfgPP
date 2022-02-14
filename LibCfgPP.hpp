@@ -5,12 +5,6 @@
 #include <vector>
 
 namespace LibCfgPP {
-    struct file_info {
-        std::string path;
-        std::vector<std::string> lines;
-        bool is_open = false;
-    };
-
     class exception : std::exception {
         std::string _msg;
 
