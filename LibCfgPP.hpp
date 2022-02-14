@@ -55,7 +55,7 @@ namespace LibCfgPP {
          *          changed the value of a string. In order for the changes to
          *          take effect, you will need to call this function.
          */
-        void update_file();
+        void update();
 
         /**
          * @brief Changes the value of a specific string to the one you
