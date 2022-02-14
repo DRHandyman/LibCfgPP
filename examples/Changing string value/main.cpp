@@ -15,7 +15,7 @@ int main() {
         cfg_file.change_the_value("section", "string", "another value");
 
         cfg_file.update_file();
-    } catch (const LibCfgPP::exception &e) {
+    } catch (const LibCfgPP::LCPPException &e) {
         cout << e.what() << endl;
     }
 
