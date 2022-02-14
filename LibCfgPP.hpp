@@ -23,6 +23,10 @@ namespace LibCfgPP {
          */
         CfgFile() = default;
 
+        /**
+         * @details Constructs a new CfgFile object and opens the configuration
+         *          file in the specified directory.
+         */
         CfgFile(const std::string &path);
 
         /**
@@ -39,14 +43,17 @@ namespace LibCfgPP {
 
         /**
          * @brief Returns the value of a specific string.
-         * @param string_key - String key.
+         * @param string_key - The key of the string you want to change the
+         * value of.
          */
         std::string read(const std::string &string_key),
             /**
-             * @brief Returns the value of a specific string from a specific
-             *        section.
-             * @param section_key - Section Key.
-             * @param string_key - String key.
+             * @details Returns the value of a specific string from a specific
+             *          section.
+             * @param section_key - The key of the section in which you want to
+             *                      read the value of the string.
+             * @param string_key - The key of the string you want to change the
+             * value of.
              */
             read(const std::string &section_key, const std::string &string_key);
 
@@ -58,18 +65,21 @@ namespace LibCfgPP {
         void update();
 
         /**
-         * @brief Changes the value of a specific string to the one you
-         *        specified.
-         * @param string_key - String key.
+         * @details Changes the value of a specific string to the one you
+         *          specified.
+         * @param string_key - The key of the string you want to change the
+         *                      value of.
          * @param value - The value to assign to the string.
          */
         void change_the_value(const std::string &string_key,
                               const std::string &value),
             /**
-             * @brief Changes the value of a specific string in a specific
-             *        section.
-             * @param section_key - Section Key.
-             * @param string_key - String key.
+             * @details Changes the value of a specific string in a specific
+             *          section.
+             * @param section_key - The key of the section in which you want to
+             *                      read the value of the string.
+             * @param string_key - The key of the string you want to change the
+             *                     value of.
              * @param value - The value to assign to the string.
              */
             change_the_value(const std::string &section_key,
