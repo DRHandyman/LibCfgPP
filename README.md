@@ -54,4 +54,4 @@ string = "value" # Test comment
 * Added the ability to read string values and read sections.
 * Added the ability to change the string value.
 # Notes
-* You can view code examples in the [examples](https://github.com/DRHandyman/LibCfgPP/tree/main/examples) folder.
+* You can view code examples in the [examples](https://github.com/DRHandyman/LibCfgPP/tree/main/examples) folder. 
