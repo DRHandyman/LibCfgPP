@@ -411,11 +411,11 @@ namespace LibCfgPP {
 
         if (!lines.empty() && lines[id] != "")
             lines.insert(lines.begin() + id, "");
-            
+
         if (id + 1 < lines.size() && line_is_section(lines[id + 1]))
             lines.insert(lines.begin() + id, "");
 
         lines.empty() ? lines.push_back(string_key + " = \"" + value + '"')
-                      : lines[id] = string_key + " = \"" + value + '"';
+                      : (void)(lines[id] = string_key + " = \"" + value + '"');
     }
 } // namespace LibCfgPP
