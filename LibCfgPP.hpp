@@ -86,6 +86,9 @@ namespace LibCfgPP {
                              const std::string &string_key,
                              const std::string &value);
 
+        void create_string(const std::string &string_key,
+                           const std::string &value);
+
       private:
         std::string path;
         std::vector<std::string> lines;

@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <fstream>
+#include <iostream>
 #include <sys/stat.h>
 
 #include "LibCfgPP.hpp"
@@ -395,5 +396,26 @@ namespace LibCfgPP {
 
         lines[string_id] = "    " + string_key + " = \"" + value + "\" " +
                            get_line_comment(lines[string_id]);
+    }
+
+    void CfgFile::create_string(const std::string &string_key,
+                                const std::string &value) {
+        size_t id = 0;
+
+        for (size_t i = 0; i < lines.size(); i++) {
+            if (line_is_section(lines[i]))
+                break;
+
+            id = i;
+        }
+
+        if (!lines.empty() && lines[id] != "")
+            lines.insert(lines.begin() + id, "");
+            
+        if (id + 1 < lines.size() && line_is_section(lines[id + 1]))
+            lines.insert(lines.begin() + id, "");
+
+        lines.empty() ? lines.push_back(string_key + " = \"" + value + '"')
+                      : lines[id] = string_key + " = \"" + value + '"';
     }
 } // namespace LibCfgPP
