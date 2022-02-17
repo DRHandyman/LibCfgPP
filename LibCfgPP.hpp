@@ -18,74 +18,84 @@ namespace LibCfgPP {
 
     class CfgFile {
       public:
-        /**
-         * @brief Main constructor
-         */
+        /// Default constructor.
         CfgFile() = default;
 
         /**
-         * @details Constructs a new CfgFile object and opens the configuration
-         *          file in the specified directory.
+         * @details Creates a new CfgFile object and opens the configuration
+         *          file at the specified path.
+         *
+         * @param path The path to the configuration file.
          */
         CfgFile(const std::string &path);
 
         /**
          * @brief Opens the configuration file at the specified path.
-         * @param path - The path to a specific configuration file.
+         *
+         * @param path The path to the configuration file.
          */
         void open(const std::string &path);
 
-        // Closes the file.
+        /// Closes the file.
         void close();
 
-        // Returns true if the file is open, false if closed.
+        /**
+         * @brief Returns true if the file is open, false if closed.
+         *
+         * @return true
+         * @return false
+         */
         bool is_open();
 
         /**
-         * @brief Returns the value of a specific string.
-         * @param string_key - The key of the string you want to change the
-         *        value of.
+         * @details Finds a string by the specified key in the file and reads
+         *          its value.
+         *
+         * @param string_key Key to the string.
+         *
+         * @return The value of the found string.
          */
         std::string read(const std::string &string_key),
             /**
-             * @details Returns the value of a specific string from a specific
-             *          section.
-             * @param section_key - The key of the section in which you want to
-             *                      read the value of the string.
-             * @param string_key - The key of the string you want to change the
-             * value of.
+             * @brief Reads the value of a string in a specific section.
+             *
+             * @param section_key Key to the section.
+             * @param string_key Key to the string.
+             *
+             * @return The value of the found string.
              */
             read(const std::string &section_key, const std::string &string_key);
 
-        /**
-         * @details Let's say you have made changes in the file, for example,
-         *          changed the value of a string. In order for the changes to
-         *          take effect, you will need to call this function.
-         */
+        /// Updates all lines of the file.
         void update();
 
         /**
-         * @details Changes the value of a specific string to the one you
-         *          specified.
-         * @param string_key - The key of the string you want to change the
-         *                      value of.
-         * @param value - The value to assign to the string.
+         * @details Finds a string under the specified key and changes its value
+         *          to the one you specified.
+         *
+         * @param string_key The key to the string.
+         * @param value New value for the string.
          */
         void change_the_value(const std::string &string_key,
                               const std::string &value),
             /**
-             * @details Changes the value of a specific string in a specific
-             *          section.
-             * @param section_key - The key of the section in which you want to
-             *                      read the value of the string.
-             * @param string_key - The key of the string you want to change the
-             *                     value of.
-             * @param value - The value to assign to the string.
+             * @details Finds a string by the specified key, in a specific
+             *          section and changes its value to the one you specified.
+             *
+             * @param section_key The key to the section.
+             * @param string_key The key to the string.
+             * @param value New value for the string.
              */
             change_the_value(const std::string &section_key,
                              const std::string &string_key,
                              const std::string &value);
 
+        /**
+         * @brief Creates a new string in the file.
+         * 
+         * @param string_key The key of the string.
+         * @param value The value that should be assigned to the string.
+         */
         void create_string(const std::string &string_key,
                            const std::string &value);
 
