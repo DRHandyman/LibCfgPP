@@ -55,3 +55,4 @@ string = "value" # Test comment
 * Added the ability to change the string value.
 # Notes
 * You can view code examples in the [examples](https://github.com/DRHandyman/LibCfgPP/tree/main/examples) folder.
+* You can view the function descriptions in [LibCfgPP.hpp](https://github.com/DRHandyman/LibCfgPP/blob/main/LibCfgPP.hpp ) file or view the documentation by opening the file [docs/html/index.html](https://github.com/DRHandyman/LibCfgPP/blob/main/docs/html/index.html) in your browser.
