@@ -1,0 +1,170 @@
+\hypertarget{class_lib_cfg_p_p_1_1_cfg_file}{}\doxysection{Lib\+Cfg\+PP\+::Cfg\+File Class Reference}
+\label{class_lib_cfg_p_p_1_1_cfg_file}\index{LibCfgPP::CfgFile@{LibCfgPP::CfgFile}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_lib_cfg_p_p_1_1_cfg_file_a31d1414e228190bd584ed8ecbf3db13d}\label{class_lib_cfg_p_p_1_1_cfg_file_a31d1414e228190bd584ed8ecbf3db13d}} 
+{\bfseries Cfg\+File} ()=default
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_lib_cfg_p_p_1_1_cfg_file_abf93fa83d778bac3eed0ca84523fd89c}{Cfg\+File}} (const std\+::string \&path)
+\item 
+void \mbox{\hyperlink{class_lib_cfg_p_p_1_1_cfg_file_a9a1f3d54037fc9c2ebf7e4962cd5a1a2}{open}} (const std\+::string \&path)
+\begin{DoxyCompactList}\small\item\em Opens the configuration file at the specified path. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_lib_cfg_p_p_1_1_cfg_file_adeed2a2abfa778117d9f2f724624ffc7}\label{class_lib_cfg_p_p_1_1_cfg_file_adeed2a2abfa778117d9f2f724624ffc7}} 
+void {\bfseries close} ()
+\begin{DoxyCompactList}\small\item\em Closes the file. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_lib_cfg_p_p_1_1_cfg_file_a3359f4bd2ec563add55bbb9c65a910a3}{is\+\_\+open}} ()
+\begin{DoxyCompactList}\small\item\em Returns true if the file is open, false if closed. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_lib_cfg_p_p_1_1_cfg_file_a776cb62899b941dc37b0653c35ed759d}{read}} (const std\+::string \&string\+\_\+key)
+\item 
+std\+::string \mbox{\hyperlink{class_lib_cfg_p_p_1_1_cfg_file_a7d14444a47c348b441688c265390420b}{read}} (const std\+::string \&section\+\_\+key, const std\+::string \&string\+\_\+key)
+\begin{DoxyCompactList}\small\item\em Reads the value of a string in a specific section. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_lib_cfg_p_p_1_1_cfg_file_af8d08db6a623c01f9c08c685dea6c793}\label{class_lib_cfg_p_p_1_1_cfg_file_af8d08db6a623c01f9c08c685dea6c793}} 
+void {\bfseries update} ()
+\begin{DoxyCompactList}\small\item\em Updates all lines of the file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_lib_cfg_p_p_1_1_cfg_file_a9a8680c8adbaa7460723c7c75cf6874f}{change\+\_\+the\+\_\+value}} (const std\+::string \&string\+\_\+key, const std\+::string \&value)
+\item 
+void \mbox{\hyperlink{class_lib_cfg_p_p_1_1_cfg_file_a5bfd6a7313ef7160b35484693d6310aa}{change\+\_\+the\+\_\+value}} (const std\+::string \&section\+\_\+key, const std\+::string \&string\+\_\+key, const std\+::string \&value)
+\item 
+void \mbox{\hyperlink{class_lib_cfg_p_p_1_1_cfg_file_a114d575f44a79c77a7961f9d2cb60ef5}{create\+\_\+string}} (const std\+::string \&string\+\_\+key, const std\+::string \&value)
+\begin{DoxyCompactList}\small\item\em Creates a new string in the file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_lib_cfg_p_p_1_1_cfg_file_abf93fa83d778bac3eed0ca84523fd89c}\label{class_lib_cfg_p_p_1_1_cfg_file_abf93fa83d778bac3eed0ca84523fd89c}} 
+\index{LibCfgPP::CfgFile@{LibCfgPP::CfgFile}!CfgFile@{CfgFile}}
+\index{CfgFile@{CfgFile}!LibCfgPP::CfgFile@{LibCfgPP::CfgFile}}
+\doxysubsubsection{\texorpdfstring{CfgFile()}{CfgFile()}}
+{\footnotesize\ttfamily Lib\+Cfg\+PP\+::\+Cfg\+File\+::\+Cfg\+File (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path }\end{DoxyParamCaption})}
+
+Creates a new \mbox{\hyperlink{class_lib_cfg_p_p_1_1_cfg_file}{Cfg\+File}} object and opens the configuration file at the specified path.
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & The path to the configuration file. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_lib_cfg_p_p_1_1_cfg_file_a5bfd6a7313ef7160b35484693d6310aa}\label{class_lib_cfg_p_p_1_1_cfg_file_a5bfd6a7313ef7160b35484693d6310aa}} 
+\index{LibCfgPP::CfgFile@{LibCfgPP::CfgFile}!change\_the\_value@{change\_the\_value}}
+\index{change\_the\_value@{change\_the\_value}!LibCfgPP::CfgFile@{LibCfgPP::CfgFile}}
+\doxysubsubsection{\texorpdfstring{change\_the\_value()}{change\_the\_value()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Lib\+Cfg\+PP\+::\+Cfg\+File\+::change\+\_\+the\+\_\+value (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{section\+\_\+key,  }\item[{const std\+::string \&}]{string\+\_\+key,  }\item[{const std\+::string \&}]{value }\end{DoxyParamCaption})}
+
+Finds a string by the specified key, in a specific section and changes its value to the one you specified.
+
+
+\begin{DoxyParams}{Parameters}
+{\em section\+\_\+key} & The key to the section. \\
+\hline
+{\em string\+\_\+key} & The key to the string. \\
+\hline
+{\em value} & New value for the string. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_lib_cfg_p_p_1_1_cfg_file_a9a8680c8adbaa7460723c7c75cf6874f}\label{class_lib_cfg_p_p_1_1_cfg_file_a9a8680c8adbaa7460723c7c75cf6874f}} 
+\index{LibCfgPP::CfgFile@{LibCfgPP::CfgFile}!change\_the\_value@{change\_the\_value}}
+\index{change\_the\_value@{change\_the\_value}!LibCfgPP::CfgFile@{LibCfgPP::CfgFile}}
+\doxysubsubsection{\texorpdfstring{change\_the\_value()}{change\_the\_value()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Lib\+Cfg\+PP\+::\+Cfg\+File\+::change\+\_\+the\+\_\+value (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{string\+\_\+key,  }\item[{const std\+::string \&}]{value }\end{DoxyParamCaption})}
+
+Finds a string under the specified key and changes its value to the one you specified.
+
+
+\begin{DoxyParams}{Parameters}
+{\em string\+\_\+key} & The key to the string. \\
+\hline
+{\em value} & New value for the string. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_lib_cfg_p_p_1_1_cfg_file_a114d575f44a79c77a7961f9d2cb60ef5}\label{class_lib_cfg_p_p_1_1_cfg_file_a114d575f44a79c77a7961f9d2cb60ef5}} 
+\index{LibCfgPP::CfgFile@{LibCfgPP::CfgFile}!create\_string@{create\_string}}
+\index{create\_string@{create\_string}!LibCfgPP::CfgFile@{LibCfgPP::CfgFile}}
+\doxysubsubsection{\texorpdfstring{create\_string()}{create\_string()}}
+{\footnotesize\ttfamily void Lib\+Cfg\+PP\+::\+Cfg\+File\+::create\+\_\+string (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{string\+\_\+key,  }\item[{const std\+::string \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Creates a new string in the file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em string\+\_\+key} & The key of the string. \\
+\hline
+{\em value} & The value that should be assigned to the string. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_lib_cfg_p_p_1_1_cfg_file_a3359f4bd2ec563add55bbb9c65a910a3}\label{class_lib_cfg_p_p_1_1_cfg_file_a3359f4bd2ec563add55bbb9c65a910a3}} 
+\index{LibCfgPP::CfgFile@{LibCfgPP::CfgFile}!is\_open@{is\_open}}
+\index{is\_open@{is\_open}!LibCfgPP::CfgFile@{LibCfgPP::CfgFile}}
+\doxysubsubsection{\texorpdfstring{is\_open()}{is\_open()}}
+{\footnotesize\ttfamily bool Lib\+Cfg\+PP\+::\+Cfg\+File\+::is\+\_\+open (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns true if the file is open, false if closed. 
+
+\begin{DoxyReturn}{Returns}
+true 
+
+false 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_lib_cfg_p_p_1_1_cfg_file_a9a1f3d54037fc9c2ebf7e4962cd5a1a2}\label{class_lib_cfg_p_p_1_1_cfg_file_a9a1f3d54037fc9c2ebf7e4962cd5a1a2}} 
+\index{LibCfgPP::CfgFile@{LibCfgPP::CfgFile}!open@{open}}
+\index{open@{open}!LibCfgPP::CfgFile@{LibCfgPP::CfgFile}}
+\doxysubsubsection{\texorpdfstring{open()}{open()}}
+{\footnotesize\ttfamily void Lib\+Cfg\+PP\+::\+Cfg\+File\+::open (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path }\end{DoxyParamCaption})}
+
+
+
+Opens the configuration file at the specified path. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & The path to the configuration file. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_lib_cfg_p_p_1_1_cfg_file_a7d14444a47c348b441688c265390420b}\label{class_lib_cfg_p_p_1_1_cfg_file_a7d14444a47c348b441688c265390420b}} 
+\index{LibCfgPP::CfgFile@{LibCfgPP::CfgFile}!read@{read}}
+\index{read@{read}!LibCfgPP::CfgFile@{LibCfgPP::CfgFile}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily std\+::string Lib\+Cfg\+PP\+::\+Cfg\+File\+::read (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{section\+\_\+key,  }\item[{const std\+::string \&}]{string\+\_\+key }\end{DoxyParamCaption})}
+
+
+
+Reads the value of a string in a specific section. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em section\+\_\+key} & Key to the section. \\
+\hline
+{\em string\+\_\+key} & Key to the string.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value of the found string. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_lib_cfg_p_p_1_1_cfg_file_a776cb62899b941dc37b0653c35ed759d}\label{class_lib_cfg_p_p_1_1_cfg_file_a776cb62899b941dc37b0653c35ed759d}} 
+\index{LibCfgPP::CfgFile@{LibCfgPP::CfgFile}!read@{read}}
+\index{read@{read}!LibCfgPP::CfgFile@{LibCfgPP::CfgFile}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily std\+::string Lib\+Cfg\+PP\+::\+Cfg\+File\+::read (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{string\+\_\+key }\end{DoxyParamCaption})}
+
+Finds a string by the specified key in the file and reads its value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em string\+\_\+key} & Key to the string.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value of the found string. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+D\+:/\+Lib\+Cfg\+PP/Lib\+Cfg\+PP.\+hpp\item 
+D\+:/\+Lib\+Cfg\+PP/Lib\+Cfg\+PP.\+cpp\end{DoxyCompactItemize}
