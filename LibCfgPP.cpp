@@ -6,7 +6,7 @@
 #include "LibCfgPP.hpp"
 
 namespace LibCfgPP {
-    enum { LCPP_DEFAULT_ERROR = -1 };
+    enum { LCPP_DEFAULT_ERROR = -1, ALLOW_WHITESPACES_IN_KEYS = false };
 
     constexpr const char *file_types[3] = {".cfg", ".conf", ".config"};
     constexpr const char forbidden_characters[3] = {'[', ']', '"'};
@@ -194,6 +194,27 @@ namespace LibCfgPP {
             LCPP_ERROR("Unidentified line type.", line_id);
     }
 
+    void scan_the_key_for_whitespaces(const std::string &line,
+                                      const uint32_t &line_id) {
+        if (ALLOW_WHITESPACES_IN_KEYS == false) {
+            if (line_is_section(line)) {
+                const std::string section_key = get_section_key(line);
+
+                if (std::count(section_key.begin(), section_key.end(), ' ') !=
+                    0)
+                    LCPP_ERROR("Whitespaces are not allowed in section keys.",
+                               line_id);
+            }
+            if (line_is_string(line)) {
+                const std::string string_key = get_string_key(line);
+
+                if (std::count(string_key.begin(), string_key.end(), ' ') != 0)
+                    LCPP_ERROR("Whitespaces are not allowed in string keys.",
+                               line_id);
+            }
+        }
+    }
+
     void parse_file_lines(const std::string &file_path,
                           std::vector<std::string> &lines) {
         uint32_t i = 0;
@@ -213,6 +234,7 @@ namespace LibCfgPP {
             line = remove_tl_whitespaces(line);
 
             scan_the_line_for_type(line, i);
+            scan_the_key_for_whitespaces(line, i);
 
             if (line_is_section(line) && !section_detected)
                 section_detected = true;
