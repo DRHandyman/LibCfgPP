@@ -10,9 +10,9 @@ int main() {
     try {
         cfg_file.open("cfg_file.cfg");
 
-        cfg_file.change_the_value("string", "another value");
+        cfg_file.change("string", "another value");
 
-        cfg_file.change_the_value("section", "string", "another value");
+        cfg_file.change("section", "string", "another value");
 
         cfg_file.update();
     } catch (const LibCfgPP::LCPPException &e) {
