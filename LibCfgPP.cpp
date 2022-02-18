@@ -358,8 +358,8 @@ namespace LibCfgPP {
         return output;
     }
 
-    void CfgFile::change_the_value(const std::string &string_key,
-                                   const std::string &value) {
+    void CfgFile::change(const std::string &string_key,
+                         const std::string &value) {
         int i, id = -1;
 
         for (auto it = lines.begin(); it != lines.end(); it++) {
@@ -383,9 +383,9 @@ namespace LibCfgPP {
                        LCPP_DEFAULT_ERROR);
     }
 
-    void CfgFile::change_the_value(const std::string &section_key,
-                                   const std::string &string_key,
-                                   const std::string &value) {
+    void CfgFile::change(const std::string &section_key,
+                         const std::string &string_key,
+                         const std::string &value) {
         int section_id = -1, string_id = -1;
 
         for (uint32_t i = 0; i < lines.size(); i++) {
