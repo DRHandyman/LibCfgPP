@@ -15,7 +15,7 @@ LibCfg++ is a convenient C++ library for working with configuration files.
 * Drag and drop files [LibCfgPP.cpp](https://github.com/DRHandyman/LibCfgPP/blob/main/LibCfgPP.cpp) and [LibCfgPP.hpp](https://github.com/DRHandyman/LibCfgPP/blob/main/LibCfgPP.hpp) to the folder with your project.
 * Compile the source file LibCfgPP.cpp along with the rest of the source files.
 # Demonstration
-[Demonstration](Demonstration.gif)
+![Demonstration](Demonstration.gif)
 # Code example
 ```cpp
 // main.cpp
