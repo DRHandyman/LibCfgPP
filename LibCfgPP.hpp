@@ -76,8 +76,7 @@ namespace LibCfgPP {
          * @param string_key The key to the string.
          * @param value New value for the string.
          */
-        void change_the_value(const std::string &string_key,
-                              const std::string &value),
+        void change(const std::string &string_key, const std::string &value),
             /**
              * @details Finds a string by the specified key, in a specific
              *          section and changes its value to the one you specified.
@@ -86,13 +85,12 @@ namespace LibCfgPP {
              * @param string_key The key to the string.
              * @param value New value for the string.
              */
-            change_the_value(const std::string &section_key,
-                             const std::string &string_key,
-                             const std::string &value);
+            change(const std::string &section_key,
+                   const std::string &string_key, const std::string &value);
 
         /**
          * @brief Creates a new string in the file.
-         * 
+         *
          * @param string_key The key of the string.
          * @param value The value that should be assigned to the string.
          */
